@@ -60,12 +60,17 @@
 #define CODE_MORE 52                    // >
 #define CODE_SMALLER 53                 // <
 #define CODE_MORE_EQUAL 54              // >=
-#define CODE_LESS_EQUAL 55              // <=
+#define CODE_LESSER_EQUAL 55            // <=
 #define CODE_AND 56                     // &&
 #define CODE_OR 57                      // ||
 #define CODE_RECEIVE 58                 // =
 #define CODE_STRING 59
 #define CODE_VALUE_CHAR 60
+#define CODE_PLUS_EQUAL 61              // +=
+#define CODE_DIV_EQUAL 62               // /=
+#define CODE_MULT_EQUAL 63              // *=
+#define CODE_LESS_EQUAL 64              // -=
+#define CODE_INV 65                     // !
 
 void read_file();
 void add_current_in_word();
@@ -163,8 +168,7 @@ int main()
       }
     }
     else if (CURRENT == '1' || CURRENT == '2' || CURRENT == '3' || CURRENT == '4' || CURRENT == '5' ||
-             CURRENT == '6' || CURRENT == '7' || CURRENT == '8' || CURRENT == '9' || CURRENT == '+' ||
-             CURRENT == '-' )
+             CURRENT == '6' || CURRENT == '7' || CURRENT == '8' || CURRENT == '9' )
     {
       add_current_in_word();
       number_q1();
@@ -217,9 +221,138 @@ int main()
     {
       words_char();
     }
+    else if (CURRENT == '+')
+    {
+      if(NEXT == '+')
+      {
+        read_file();
+        printf("%d\n", CODE_PLUS_PLUS);
+      }
+      else if (NEXT == ' ')
+      {
+        read_file();
+        printf("%d\n", CODE_PLUS);
+      }
+      else if (NEXT == '=')
+      {
+        read_file();
+        printf("%d\n", CODE_PLUS_EQUAL);
+      }
+      else
+      {
+        number_q1();
+      }
+    }
+    else if (CURRENT == '-')
+    {
+      if(NEXT == '-')
+      {
+        read_file();
+        printf("%d\n", CODE_LESS_LESS);
+      }
+      else if (NEXT == ' ')
+      {
+        read_file();
+        printf("%d\n", CODE_LESS);
+      }
+      else if (NEXT == '=')
+      {
+        read_file();
+        printf("%d\n", CODE_LESS_EQUAL);
+      }
+      else
+      {
+        number_q1();
+      }
+    }
+    else if (CURRENT == '/')
+    {
+      if(NEXT == '=')
+      {
+        read_file();
+        printf("%d\n", CODE_DIV_EQUAL);
+      }
+      else if (NEXT == '/')
+      {
+        while (NEXT != '\n')
+        {
+          read_file();
+        }
+      }
+      else if (NEXT == '*')
+      {
+        read_file();
+        read_file();
+        while (CURRENT != '*' && NEXT != '/')
+        {
+          read_file();
+        }
+        read_file();
+      }
+      else
+      {
+        read_file();
+        printf("%d\n", CODE_DIV);
+      }
+    }
+    else if (CURRENT == '*')
+    {
+      if (NEXT == '=')
+      {
+        read_file();
+        printf("%d\n", CODE_MULT_EQUAL);
+      }
+      else
+      {
+        printf("%d\n", CODE_MULT);
+      }
+    }
+    else if (CURRENT == '<')
+    {
+      if (NEXT == '=')
+      {
+        read_file();
+        printf("%d\n", CODE_LESSER_EQUAL);
+      }
+      else
+      {
+       printf("%d\n", CODE_SMALLER); 
+      }
+    }
+    else if (CURRENT == '>')
+    {
+      if (NEXT == '=')
+      {
+        read_file();
+        printf("%d\n", CODE_MORE_EQUAL);
+      }
+      else
+      {
+       printf("%d\n", CODE_MORE); 
+      }
+    }
+    else if (CURRENT == '!')
+    {
+      if (NEXT == '=')
+      {
+        read_file();
+        printf("%d\n", CODE_DIFFERENT);
+      }
+      else
+      {
+        printf("%d\n", CODE_INV);
+      }
+    }
+    else if (CURRENT == '|' && NEXT == '|')
+    {
+      printf("%d\n", CODE_OR);
+    }
+    else if (CURRENT == '&' && NEXT == '&')
+    {
+      printf("%d\n", CODE_AND);
+    }
     else if (CURRENT == ',' || CURRENT == ';' || CURRENT == ' ')
     {
-
     }
     else
     {
@@ -246,27 +379,31 @@ void add_current_in_word()
 
 void number_q1()
 {
-  read_file();
-  if (CURRENT == '0' || CURRENT == '1' || CURRENT == '2' || CURRENT == '3' ||
-      CURRENT == '4' || CURRENT == '4' || CURRENT == '5' || CURRENT == '6' ||
-      CURRENT == '7' || CURRENT == '8' || CURRENT == '9')
+  if (NEXT == '0' || NEXT == '1' || NEXT == '2' || NEXT == '3' ||
+      NEXT == '4' || NEXT == '4' || NEXT == '5' || NEXT == '6' ||
+      NEXT == '7' || NEXT == '8' || NEXT == '9')
   {
+    read_file();
     add_current_in_word();
     number_q1();
   }
-  else if (CURRENT == '.')
+  else if (NEXT == '.')
   {
+    read_file();
     add_current_in_word();
     number_q3();
   }
-  else if (CURRENT == 'e')
+  else if (NEXT == 'e')
   {
+    read_file();
     add_current_in_word();
     number_q4();
   }
-  else if (CURRENT == ' ' || CURRENT == ';' || CURRENT == ',')
+  else if (NEXT == ' ' || NEXT == ';' || NEXT == ',' ||
+           NEXT == ']' || NEXT == ')' )
   {
     printf("%d\n", CODE_NUMBER);
+    print_word();
   }
   else
   {
@@ -278,16 +415,17 @@ void number_q1()
 
 void number_q2()
 {
-  read_file();
-  if (CURRENT == '0' || CURRENT == '1' || CURRENT == '2' || CURRENT == '3' ||
-      CURRENT == '4' || CURRENT == '4' || CURRENT == '5' || CURRENT == '6' ||
-      CURRENT == '7' || CURRENT == '8' || CURRENT == '9')
+  if (NEXT == '0' || NEXT == '1' || NEXT == '2' || NEXT == '3' ||
+      NEXT == '4' || NEXT == '4' || NEXT == '5' || NEXT == '6' ||
+      NEXT == '7' || NEXT == '8' || NEXT == '9')
   {
+    read_file();
     add_current_in_word();
     number_q3();
   }
-  else if (CURRENT == 'e')
+  else if (NEXT == 'e')
   {
+    read_file();
     add_current_in_word();
     number_q4();
   }
@@ -301,21 +439,24 @@ void number_q2()
 
 void number_q3()
 {
-  read_file();
-  if (CURRENT == '0' || CURRENT == '1' || CURRENT == '2' || CURRENT == '3' ||
-      CURRENT == '4' || CURRENT == '4' || CURRENT == '5' || CURRENT == '6' ||
-      CURRENT == '7' || CURRENT == '8' || CURRENT == '9')
+  if (NEXT == '0' || NEXT == '1' || NEXT == '2' || NEXT == '3' ||
+      NEXT == '4' || NEXT == '4' || NEXT == '5' || NEXT == '6' ||
+      NEXT == '7' || NEXT == '8' || NEXT == '9')
   {
+    read_file();
     add_current_in_word();
     number_q3();
   }
-  else if (CURRENT == 'e')
+  else if (NEXT == 'e')
   {
+    read_file();
     number_q4();
   }
-  else if (CURRENT == ' ' || CURRENT == ';' || CURRENT == ',')
+  else if (NEXT == ' ' || NEXT == ';' || NEXT == ',' ||
+           NEXT == ']' || NEXT == ')' )
   {
     printf("%d\n", CODE_NUMBER);
+    print_word();
   }
   else
   {
@@ -327,17 +468,18 @@ void number_q3()
 
 void number_q4()
 {
-  read_file();
-  if (CURRENT == '0' || CURRENT == '1' || CURRENT == '2' || CURRENT == '3' ||
-      CURRENT == '4' || CURRENT == '4' || CURRENT == '5' || CURRENT == '6' ||
-      CURRENT == '7' || CURRENT == '8' || CURRENT == '9')
+  if (NEXT == '0' || NEXT == '1' || NEXT == '2' || NEXT == '3' ||
+      NEXT == '4' || NEXT == '4' || NEXT == '5' || NEXT == '6' ||
+      NEXT == '7' || NEXT == '8' || NEXT == '9')
   {
+    read_file();
     add_current_in_word();
     number_q4();
   }
-  else if (CURRENT == ' ' || CURRENT == ';' || CURRENT == ',')
+  else if (NEXT == ' ' || NEXT == ';' || NEXT == ',')
   {
     printf("%d\n", CODE_NUMBER);
+    print_word();
   }
   else
   {
