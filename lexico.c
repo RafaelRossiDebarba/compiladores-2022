@@ -71,6 +71,8 @@
 #define CODE_MULT_EQUAL 63              // *=
 #define CODE_LESS_EQUAL 64              // -=
 #define CODE_INV 65                     // !
+#define CODE_DEFINE 66
+#define CODE_INCLUDE 67
 
 void read_file();
 void add_current_in_word();
@@ -354,6 +356,32 @@ int main()
     else if (CURRENT == ',' || CURRENT == ';' || CURRENT == ' ')
     {
     }
+    else if (CURRENT == '#')
+    {
+      do
+      {
+        add_current_in_word();
+        read_file();
+      } while (CURRENT != ' ');
+
+      if (strcmp(WORD, "#include") == 0)
+      {
+        while (CURRENT != '>')
+        {
+          if(CURRENT != '<')
+          {
+            add_current_in_word();
+          }
+          read_file();
+        }
+        read_file();
+        printf("%d\n", CODE_INCLUDE);
+      }
+      else if (strcmp(WORD, "#define") == 0)
+      {
+        printf("%d\n", CODE_DEFINE);
+      }
+    }
     else
     {
       printf("Não reconhecido %c\n", CURRENT);
@@ -400,7 +428,7 @@ void number_q1()
     number_q4();
   }
   else if (NEXT == ' ' || NEXT == ';' || NEXT == ',' ||
-           NEXT == ']' || NEXT == ')' )
+           NEXT == ']' || NEXT == ')' || NEXT == '\n')
   {
     printf("%d\n", CODE_NUMBER);
     print_word();
