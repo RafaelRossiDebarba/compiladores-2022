@@ -6,73 +6,83 @@
 #define TAM 255
 #define DEBUG 1
 
-#define CODE_AUTO 1
-#define CODE_VOID 2
-#define CODE_BREAK 3
-#define CODE_CONTINUE 4
-#define CODE_DEFAULT 5
-#define CODE_FOR 6
-#define CODE_DO 7
-#define CODE_WHILE 8
-#define CODE_IF 9
-#define CODE_ELSE 10
-#define CODE_SWITCH 11
-#define CODE_CASE 12
-#define CODE_ENUM 13
-#define CODE_EXTERN 14
-#define CODE_GOTO 15
-#define CODE_REGISTER 16
-#define CODE_RETURN 17
-#define CODE_SIGNED 18
-#define CODE_SIZEOF 19
-#define CODE_STATIC 20
-#define CODE_STRUCT 21
-#define CODE_TYPEDEF 22
-#define CODE_UNION 23
-#define CODE_VOLATILE 24
-#define CODE_PACKED 25
-#define CODE_CONST 26
-#define CODE_UNSIGNED 27
-#define CODE_CHAR 28
-#define CODE_SHORT 29
-#define CODE_INT 30
-#define CODE_LONG 31
-#define CODE_FLOAT 32
-#define CODE_DOUBLE 33
-#define CODE_VARIABLE_FUNCTION 34
-#define CODE_NUMBER 35
-#define CODE_BIN 36
-#define CODE_HEX 37
-#define CODE_OPEN_KEYS 38               // {
-#define CODE_CLOSE_KEYS 39              // }
-#define CODE_OPEN_PARENTHESES 40        // (
-#define CODE_CLOSE_PARENTHESES 41       // )
-#define CODE_OPEN_SQUARE_BRACKETS 42    // [
-#define CODE_CLOSE_SQUARE_BRACKETS 43   // ]
-#define CODE_PLUS 44                    // +
-#define CODE_LESS 45                    // -
-#define CODE_MULT 46                    // *
-#define CODE_DIV 47                     // /
-#define CODE_PLUS_PLUS 48               // ++
-#define CODE_LESS_LESS 49               // --
-#define CODE_EQUAL 50                   // ==
-#define CODE_DIFFERENT 51               // !=
-#define CODE_MORE 52                    // >
-#define CODE_SMALLER 53                 // <
-#define CODE_MORE_EQUAL 54              // >=
-#define CODE_LESSER_EQUAL 55            // <=
-#define CODE_AND 56                     // &&
-#define CODE_OR 57                      // ||
-#define CODE_RECEIVE 58                 // =
-#define CODE_STRING 59
-#define CODE_VALUE_CHAR 60
-#define CODE_PLUS_EQUAL 61              // +=
-#define CODE_DIV_EQUAL 62               // /=
-#define CODE_MULT_EQUAL 63              // *=
-#define CODE_LESS_EQUAL 64              // -=
-#define CODE_INV 65                     // !
-#define CODE_DEFINE 66
-#define CODE_INCLUDE 67
+#define CODE_AUTO 100
+#define CODE_VOID 129
+#define CODE_BREAK 101
+#define CODE_CONTINUE 105
+#define CODE_DEFAULT 106
+#define CODE_FOR 113
+#define CODE_DO 107
+#define CODE_WHILE 131
+#define CODE_IF 115
+#define CODE_ELSE 109
+#define CODE_SWITCH 125
+#define CODE_CASE 102
+#define CODE_ENUM 110
+#define CODE_EXTERN 111
+#define CODE_GOTO 114
+#define CODE_REGISTER 118
+#define CODE_RETURN 119
+#define CODE_SIGNED 121
+#define CODE_SIZEOF 122
+#define CODE_STATIC 123
+#define CODE_STRUCT 124
+#define CODE_TYPEDEF 126
+#define CODE_UNION 127
+#define CODE_VOLATILE 130
+#define CODE_PACKED 132
+#define CODE_CONST 104
+#define CODE_UNSIGNED 128
+#define CODE_CHAR 103
+#define CODE_SHORT 120
+#define CODE_INT 116
+#define CODE_LONG 117
+#define CODE_FLOAT 112
+#define CODE_DOUBLE 108
+#define CODE_VARIABLE_FUNCTION 136
+#define CODE_NUMBER 135
+#define CODE_BIN 133
+#define CODE_HEX 134
+#define CODE_OPEN_KEYS 5                // {
+#define CODE_CLOSE_KEYS 6               // }
+#define CODE_OPEN_PARENTHESES 7         // (
+#define CODE_CLOSE_PARENTHESES 8        // )
+#define CODE_OPEN_SQUARE_BRACKETS 9     // [
+#define CODE_CLOSE_SQUARE_BRACKETS 10   // ]
+#define CODE_PLUS 11                    // +
+#define CODE_PLUS_PLUS 12               // ++
+#define CODE_PLUS_EQUAL 13              // +=
+#define CODE_LESS 14                    // -
+#define CODE_LESS_LESS 15               // --
+#define CODE_LESS_EQUAL 16              // -=
+#define CODE_MULT 18                    // *
+#define CODE_MULT_EQUAL 19              // *=
+#define CODE_DIV 20                     // /
+#define CODE_DIV_EQUAL 21               // /=
+#define CODE_INV 25                     // !
+#define CODE_DIFFERENT 26               // !=
+#define CODE_RECEIVE 27                 // =
+#define CODE_EQUAL 28                   // ==
+#define CODE_SMALLER 29                 // <
+#define CODE_LESSER_EQUAL 30            // <=
+#define CODE_MORE 32                    // >
+#define CODE_MORE_EQUAL 33              // >=
+#define CODE_AND 38                     // &&
+#define CODE_E 37                       // &
+#define CODE_OR 36                      // ||
+#define CODE_ESC 35                     // |
+#define CODE_STRING 137
+#define CODE_VALUE_CHAR 138
+#define CODE_SMALLER_SMALLER 31         // <<
+#define CODE_MORE_MORE 34               // >>
+#define CODE_DOTE 4                     // .
+#define CODE_SEMICOLON 1                // ;
+#define CODE_COMMA 2                    // ,
+#define CODE_TWO_POINTS 3               // :
+#define CODE_RASH 17                    // #
+#define CODE_PERCENTAGE 22              // %
+#define CODE_PERCENTAGE_EQUAL 23        // %=
+#define CODE_EXCLAMATION 24             // ?
 
 void read_file();
 void add_current_in_word();
@@ -136,255 +146,245 @@ int main()
     {
       break;
     }
-    if (isalpha(CURRENT) || CURRENT == '_')
+    switch(CURRENT)
     {
-      add_current_in_word();
-      words_q1();
-    }
-    else if (CURRENT == '\n')
-    {
-      LINE++;
-    }
-    else if (CURRENT == '0')
-    {
-      if (NEXT == 'b')
-      {
-        WORD[POSITION] = '0';
-        WORD[POSITION + 1] = 'b';
-        POSITION += 2;
-        read_file();
-        bin_q1();
-      }
-      else if (NEXT == 'x')
-      {
-        WORD[POSITION] = '0';
-        WORD[POSITION + 1] = 'x';
-        POSITION += 2;
-        read_file();
-        hex_q1();
-      }
-      else
-      {
+      case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h': case 'i': case 'j': case 'k': case 'l': case 'm':
+      case 'n': case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
+      case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H': case 'I': case 'J': case 'K': case 'L': case 'M':
+      case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
+      case '_':
         add_current_in_word();
-        number_q1();
-      }
-    }
-    else if (CURRENT == '1' || CURRENT == '2' || CURRENT == '3' || CURRENT == '4' || CURRENT == '5' ||
-             CURRENT == '6' || CURRENT == '7' || CURRENT == '8' || CURRENT == '9' )
-    {
-      add_current_in_word();
-      number_q1();
-    }
-    else if (CURRENT == '.')
-    {
-      add_current_in_word();
-      number_q2();
-    }
-    else if (CURRENT == '{')
-    {
-      printf("%d\n", CODE_OPEN_KEYS);
-    }
-    else if (CURRENT == '}')
-    {
-      printf("%d\n", CODE_CLOSE_KEYS);
-    }
-    else if (CURRENT == '(')
-    {
-      printf("%d\n", CODE_OPEN_PARENTHESES);
-    }
-    else if (CURRENT == ')')
-    {
-      printf("%d\n", CODE_CLOSE_PARENTHESES);
-    }
-    else if (CURRENT == '[')
-    {
-      printf("%d\n", CODE_OPEN_SQUARE_BRACKETS);
-    }
-    else if (CURRENT == ']')
-    {
-      printf("%d\n", CODE_CLOSE_SQUARE_BRACKETS);
-    }
-    else if (CURRENT == '=')
-    {
-      if(NEXT == '=')
-      {
-        read_file();
-        printf("%d\n", CODE_RECEIVE);
-      }
-      else {
-        printf("%d\n", CODE_EQUAL);
-      }
-    }
-    else if (CURRENT == '\"')
-    {
-      words_string();
-    }
-    else if (CURRENT == '\'')
-    {
-      words_char();
-    }
-    else if (CURRENT == '+')
-    {
-      if(NEXT == '+')
-      {
-        read_file();
-        printf("%d\n", CODE_PLUS_PLUS);
-      }
-      else if (NEXT == ' ')
-      {
-        read_file();
-        printf("%d\n", CODE_PLUS);
-      }
-      else if (NEXT == '=')
-      {
-        read_file();
-        printf("%d\n", CODE_PLUS_EQUAL);
-      }
-      else
-      {
-        number_q1();
-      }
-    }
-    else if (CURRENT == '-')
-    {
-      if(NEXT == '-')
-      {
-        read_file();
-        printf("%d\n", CODE_LESS_LESS);
-      }
-      else if (NEXT == ' ')
-      {
-        read_file();
-        printf("%d\n", CODE_LESS);
-      }
-      else if (NEXT == '=')
-      {
-        read_file();
-        printf("%d\n", CODE_LESS_EQUAL);
-      }
-      else
-      {
-        number_q1();
-      }
-    }
-    else if (CURRENT == '/')
-    {
-      if(NEXT == '=')
-      {
-        read_file();
-        printf("%d\n", CODE_DIV_EQUAL);
-      }
-      else if (NEXT == '/')
-      {
-        while (NEXT != '\n')
+        words_q1();
+        break;
+      case '\n':
+        LINE++;
+        break;
+      case '0':
+        if (NEXT == 'b')
         {
+          WORD[POSITION] = '0';
+          WORD[POSITION + 1] = 'b';
+          POSITION += 2;
           read_file();
+          bin_q1();
         }
-      }
-      else if (NEXT == '*')
-      {
-        read_file();
-        read_file();
-        while (CURRENT != '*' && NEXT != '/')
+        else if (NEXT == 'x')
         {
+          WORD[POSITION] = '0';
+          WORD[POSITION + 1] = 'x';
+          POSITION += 2;
           read_file();
+          hex_q1();
         }
-        read_file();
-      }
-      else
-      {
-        read_file();
-        printf("%d\n", CODE_DIV);
-      }
-    }
-    else if (CURRENT == '*')
-    {
-      if (NEXT == '=')
-      {
-        read_file();
-        printf("%d\n", CODE_MULT_EQUAL);
-      }
-      else
-      {
-        printf("%d\n", CODE_MULT);
-      }
-    }
-    else if (CURRENT == '<')
-    {
-      if (NEXT == '=')
-      {
-        read_file();
-        printf("%d\n", CODE_LESSER_EQUAL);
-      }
-      else
-      {
-       printf("%d\n", CODE_SMALLER); 
-      }
-    }
-    else if (CURRENT == '>')
-    {
-      if (NEXT == '=')
-      {
-        read_file();
-        printf("%d\n", CODE_MORE_EQUAL);
-      }
-      else
-      {
-       printf("%d\n", CODE_MORE); 
-      }
-    }
-    else if (CURRENT == '!')
-    {
-      if (NEXT == '=')
-      {
-        read_file();
-        printf("%d\n", CODE_DIFFERENT);
-      }
-      else
-      {
-        printf("%d\n", CODE_INV);
-      }
-    }
-    else if (CURRENT == '|' && NEXT == '|')
-    {
-      printf("%d\n", CODE_OR);
-    }
-    else if (CURRENT == '&' && NEXT == '&')
-    {
-      printf("%d\n", CODE_AND);
-    }
-    else if (CURRENT == ',' || CURRENT == ';' || CURRENT == ' ')
-    {
-    }
-    else if (CURRENT == '#')
-    {
-      do
-      {
-        add_current_in_word();
-        read_file();
-      } while (CURRENT != ' ');
-
-      if (strcmp(WORD, "#include") == 0)
-      {
-        while (CURRENT != '>')
+        else
         {
-          if(CURRENT != '<')
+          add_current_in_word();
+          number_q1();
+        }
+        break;
+        case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+          add_current_in_word();
+          number_q1();
+          break;
+        case ';':
+          printf("%d\n", CODE_SEMICOLON);
+          break;
+        case ',':
+          printf("%d\n", CODE_COMMA);
+          break;
+        case ':':
+          printf("%d\n", CODE_TWO_POINTS);
+          break;
+        case '.':
+          if(NEXT >= 48 && NEXT <= 57) // 1 a 9
           {
             add_current_in_word();
+            number_q2();
           }
-          read_file();
-        }
-        read_file();
-        printf("%d\n", CODE_INCLUDE);
-      }
-      else if (strcmp(WORD, "#define") == 0)
-      {
-        printf("%d\n", CODE_DEFINE);
-      }
-    }
-    else
-    {
-      printf("Não reconhecido %c\n", CURRENT);
+          else // .
+          {
+            printf("%d\n", CODE_DOTE);
+          }
+          break;
+        case '{':
+          printf("%d\n", CODE_OPEN_KEYS);
+          break;
+        case '}':
+          printf("%d\n", CODE_CLOSE_KEYS);
+          break;
+        case '(':
+          printf("%d\n", CODE_OPEN_PARENTHESES);
+          break;
+        case ')':
+          printf("%d\n", CODE_CLOSE_PARENTHESES);
+          break;
+        case '[':
+          printf("%d\n", CODE_OPEN_SQUARE_BRACKETS);
+          break;
+        case ']':
+          printf("%d\n", CODE_CLOSE_SQUARE_BRACKETS);
+          break;
+        case '+':
+          if(NEXT == '+') // ++
+          {
+            read_file();
+            printf("%d\n", CODE_PLUS_PLUS);
+          }
+          else if (NEXT == '=') // +=
+          {
+            read_file();
+            printf("%d\n", CODE_PLUS_EQUAL);
+          }
+          else if (NEXT >= 48 && NEXT <= 57) // + 0 a 9
+          {
+            number_q1();
+          }
+          else // +
+          {
+            printf("%d\n", CODE_PLUS);
+          }
+          break;
+        case '-':
+          if(NEXT == '-') // --
+          {
+            read_file();
+            printf("%d\n", CODE_LESS_LESS);
+          }
+          else if (NEXT == '=') // -=
+          {
+            read_file();
+            printf("%d\n", CODE_LESS_EQUAL);
+          }
+          else if (NEXT >= 48 && NEXT <= 57) // - 0 a 9
+          {
+            number_q1();
+          }
+          else // -
+          {
+            printf("%d\n", CODE_LESS_LESS);
+          }
+          break;
+        case '#':
+          printf("%d\n", CODE_RASH);
+          break;
+        case '*':
+          if (NEXT == '=') // *=
+          {
+            read_file();
+            printf("%d\n", CODE_MULT_EQUAL);
+          }
+          else // *
+          {
+            printf("%d\n", CODE_MULT);
+          }
+          break;
+        case '/':
+          if(NEXT == '=') // /=
+          {
+            read_file();
+            printf("%d\n", CODE_DIV_EQUAL);
+          }
+          else // /
+          {
+            printf("%d\n", CODE_DIV);
+          }
+          break;
+        case '%':
+          if(NEXT == '=') // %=
+          {
+            printf("%d\n", CODE_PERCENTAGE_EQUAL);
+          }
+          else // %
+          {
+            printf("%d\n", CODE_PERCENTAGE);
+          }
+          break;
+        case '?':
+          printf("%d\n", CODE_EXCLAMATION);
+          break;
+        case '!':
+          if (NEXT == '=') // !=
+          {
+            read_file();
+            printf("%d\n", CODE_DIFFERENT);
+          }
+          else // !
+          {
+            printf("%d\n", CODE_INV);
+          }
+          break;
+        case '=':
+          if(NEXT == '=') // ==
+          {
+            read_file();
+            printf("%d\n", CODE_RECEIVE);
+          }
+          else { // =
+            printf("%d\n", CODE_EQUAL);
+          }
+          break;
+        case '<':
+          if (NEXT == '=') // <=
+          {
+            read_file();
+            printf("%d\n", CODE_LESSER_EQUAL);
+          }
+          else
+          {
+            if(NEXT == '<') // <<
+            {
+              printf("%d\n", CODE_SMALLER_SMALLER); 
+            }
+            else // <
+            {
+              printf("%d\n", CODE_SMALLER); 
+            }
+          }
+          break;
+        case '>':
+          if (NEXT == '=') // >=
+          {
+            read_file();
+            printf("%d\n", CODE_MORE_EQUAL);
+          }
+          else
+          {
+            if(NEXT == '>') // >>
+            {
+              printf("%d\n", CODE_MORE_MORE); 
+            }
+            else // >
+            {
+              printf("%d\n", CODE_MORE); 
+            }
+          }
+          break;
+        case '|':
+          if(NEXT == '|') // ||
+          {
+            printf("%d\n", CODE_OR);
+          }
+          else // |
+          {
+            printf("%d\n", CODE_ESC);
+          }
+          break;
+        case '&':
+          if(NEXT == '&') // &&
+          {
+            printf("%d\n", CODE_AND);
+          }
+          else // &
+          {
+            printf("%d\n", CODE_E);
+          }
+          break;
+        case '\'':
+          words_char();
+          break;
+        case '\"':
+          words_string();
+          break;
     }
   } while (NEXT != EOF && CONTINUE);
 
