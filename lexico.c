@@ -75,7 +75,7 @@
 #define CODE_VALUE_CHAR 138
 #define CODE_SMALLER_SMALLER 31         // <<
 #define CODE_MORE_MORE 34               // >>
-#define CODE_DOTE 4                     // .
+#define CODE_DOT 4                      // .
 #define CODE_SEMICOLON 1                // ;
 #define CODE_COMMA 2                    // ,
 #define CODE_TWO_POINTS 3               // :
@@ -89,7 +89,6 @@ void add_current_in_word();
 void print_word();
 int reserved_word(char word[TAM]);
 
-void number_q0();
 void number_q1();
 void number_q2();
 void number_q3();
@@ -105,6 +104,8 @@ void finish(char word[TAM]);
 void bin_q1();
 
 void hex_q1();
+
+void show_debug(int code);
 
 char CURRENT, NEXT;
 char WORD[TAM];
@@ -187,13 +188,22 @@ int main()
           number_q1();
           break;
         case ';':
-          printf("%d\n", CODE_SEMICOLON);
+          if(DEBUG)
+            show_debug(CODE_SEMICOLON);
+          else
+            printf("%d\t%d\n", CODE_SEMICOLON, LINE);
           break;
         case ',':
-          printf("%d\n", CODE_COMMA);
+          if(DEBUG)
+            show_debug(CODE_COMMA);
+          else
+            printf("%d\t%d\n", CODE_COMMA, LINE);
           break;
         case ':':
-          printf("%d\n", CODE_TWO_POINTS);
+          if(DEBUG)
+            show_debug(CODE_TWO_POINTS);
+          else
+            printf("%d\t%d\n", CODE_TWO_POINTS, LINE);
           break;
         case '.':
           if(NEXT >= 48 && NEXT <= 57) // 1 a 9
@@ -203,37 +213,64 @@ int main()
           }
           else // .
           {
-            printf("%d\n", CODE_DOTE);
+            if(DEBUG)
+              show_debug(CODE_DOT);
+            else
+              printf("%d\t%d\n", CODE_DOT, LINE);
           }
           break;
         case '{':
-          printf("%d\n", CODE_OPEN_KEYS);
+          if(DEBUG)
+            show_debug(CODE_OPEN_KEYS);
+          else
+            printf("%d\t%d\n", CODE_OPEN_KEYS, LINE);
           break;
         case '}':
-          printf("%d\n", CODE_CLOSE_KEYS);
+          if(DEBUG)
+            show_debug(CODE_CLOSE_KEYS);
+          else
+            printf("%d\t%d\n", CODE_CLOSE_KEYS, LINE);
           break;
         case '(':
-          printf("%d\n", CODE_OPEN_PARENTHESES);
+          if(DEBUG)
+            show_debug(CODE_OPEN_PARENTHESES);
+          else
+            printf("%d\t%d\n", CODE_OPEN_PARENTHESES, LINE);
           break;
         case ')':
-          printf("%d\n", CODE_CLOSE_PARENTHESES);
+          if(DEBUG)
+            show_debug(CODE_CLOSE_PARENTHESES);
+          else
+            printf("%d\t%d\n", CODE_CLOSE_PARENTHESES, LINE);
           break;
         case '[':
-          printf("%d\n", CODE_OPEN_SQUARE_BRACKETS);
+          if(DEBUG)
+            show_debug(CODE_OPEN_SQUARE_BRACKETS);
+          else
+            printf("%d\t%d\n", CODE_OPEN_SQUARE_BRACKETS, LINE);
           break;
         case ']':
-          printf("%d\n", CODE_CLOSE_SQUARE_BRACKETS);
+          if(DEBUG)
+            show_debug(CODE_CLOSE_SQUARE_BRACKETS);
+          else
+            printf("%d\t%d\n", CODE_CLOSE_SQUARE_BRACKETS, LINE);
           break;
         case '+':
           if(NEXT == '+') // ++
           {
             read_file();
-            printf("%d\n", CODE_PLUS_PLUS);
+            if(DEBUG)
+              show_debug(CODE_PLUS_PLUS);
+            else
+              printf("%d\t%d\n", CODE_PLUS_PLUS, LINE);
           }
           else if (NEXT == '=') // +=
           {
             read_file();
-            printf("%d\n", CODE_PLUS_EQUAL);
+            if(DEBUG)
+              show_debug(CODE_PLUS_EQUAL);
+            else
+              printf("%d\t%d\n", CODE_PLUS_EQUAL, LINE);
           }
           else if (NEXT >= 48 && NEXT <= 57) // + 0 a 9
           {
@@ -241,19 +278,28 @@ int main()
           }
           else // +
           {
-            printf("%d\n", CODE_PLUS);
+            if(DEBUG)
+              show_debug(CODE_PLUS);
+            else
+              printf("%d\t%d\n", CODE_PLUS, LINE);
           }
           break;
         case '-':
           if(NEXT == '-') // --
           {
             read_file();
-            printf("%d\n", CODE_LESS_LESS);
+            if(DEBUG)
+              show_debug(CODE_LESS_LESS);
+            else
+              printf("%d\t%d\n", CODE_LESS_LESS, LINE);
           }
           else if (NEXT == '=') // -=
           {
             read_file();
-            printf("%d\n", CODE_LESS_EQUAL);
+            if(DEBUG)
+              show_debug(CODE_LESS_EQUAL);
+            else
+              printf("%d\t%d\n", CODE_LESS_EQUAL, LINE);
           }
           else if (NEXT >= 48 && NEXT <= 57) // - 0 a 9
           {
@@ -261,83 +307,131 @@ int main()
           }
           else // -
           {
-            printf("%d\n", CODE_LESS_LESS);
+            if(DEBUG)
+              show_debug(CODE_LESS);
+            else
+              printf("%d\t%d\n", CODE_LESS, LINE);
           }
           break;
         case '#':
-          printf("%d\n", CODE_RASH);
+          if(DEBUG)
+            show_debug(CODE_RASH);
+          else
+            printf("%d\t%d\n", CODE_RASH, LINE);
           break;
         case '*':
           if (NEXT == '=') // *=
           {
             read_file();
-            printf("%d\n", CODE_MULT_EQUAL);
+            if(DEBUG)
+              show_debug(CODE_MULT_EQUAL);
+            else
+              printf("%d\t%d\n", CODE_MULT_EQUAL, LINE);
           }
           else // *
           {
-            printf("%d\n", CODE_MULT);
+            if(DEBUG)
+              show_debug(CODE_MULT);
+            else
+              printf("%d\t%d\n", CODE_MULT, LINE);
           }
           break;
         case '/':
           if(NEXT == '=') // /=
           {
             read_file();
-            printf("%d\n", CODE_DIV_EQUAL);
+            if(DEBUG)
+              show_debug(CODE_DIV_EQUAL);
+            else
+              printf("%d\t%d\n", CODE_DIV_EQUAL, LINE);
           }
           else // /
           {
-            printf("%d\n", CODE_DIV);
+            if(DEBUG)
+              show_debug(CODE_DIV);
+            else
+              printf("%d\t%d\n", CODE_DIV, LINE);
           }
           break;
         case '%':
           if(NEXT == '=') // %=
           {
-            printf("%d\n", CODE_PERCENTAGE_EQUAL);
+            if(DEBUG)
+              show_debug(CODE_PERCENTAGE_EQUAL);
+            else
+              printf("%d\t%d\n", CODE_PERCENTAGE_EQUAL, LINE);
           }
           else // %
           {
-            printf("%d\n", CODE_PERCENTAGE);
+            if(DEBUG)
+              show_debug(CODE_PERCENTAGE);
+            else
+              printf("%d\t%d\n", CODE_PERCENTAGE, LINE);
           }
           break;
         case '?':
-          printf("%d\n", CODE_EXCLAMATION);
+          if(DEBUG)
+            show_debug(CODE_EXCLAMATION);
+          else
+            printf("%d\t%d\n", CODE_EXCLAMATION, LINE);
           break;
         case '!':
           if (NEXT == '=') // !=
           {
             read_file();
-            printf("%d\n", CODE_DIFFERENT);
+            if(DEBUG)
+              show_debug(CODE_DIFFERENT);
+            else
+              printf("%d\t%d\n", CODE_DIFFERENT, LINE);
           }
           else // !
           {
-            printf("%d\n", CODE_INV);
+            if(DEBUG)
+              show_debug(CODE_INV);
+            else
+              printf("%d\t%d\n", CODE_INV, LINE);
           }
           break;
         case '=':
           if(NEXT == '=') // ==
           {
             read_file();
-            printf("%d\n", CODE_RECEIVE);
+            if(DEBUG)
+              show_debug(CODE_EQUAL);
+            else
+              printf("%d\t%d\n", CODE_EQUAL, LINE);
           }
           else { // =
-            printf("%d\n", CODE_EQUAL);
+            if(DEBUG)
+              show_debug(CODE_RECEIVE);
+            else
+              printf("%d\t%d\n", CODE_RECEIVE, LINE);
           }
           break;
         case '<':
           if (NEXT == '=') // <=
           {
             read_file();
-            printf("%d\n", CODE_LESSER_EQUAL);
+            if(DEBUG)
+              show_debug(CODE_LESSER_EQUAL);
+            else
+              printf("%d\t%d\n", CODE_LESSER_EQUAL, LINE);
           }
           else
           {
             if(NEXT == '<') // <<
             {
-              printf("%d\n", CODE_SMALLER_SMALLER); 
+              if(DEBUG)
+                show_debug(CODE_SMALLER_SMALLER);
+              else
+                printf("%d\t%d\n", CODE_SMALLER_SMALLER, LINE); 
             }
             else // <
             {
-              printf("%d\n", CODE_SMALLER); 
+              if(DEBUG)
+                show_debug(CODE_SMALLER);
+              else
+                printf("%d\t%d\n", CODE_SMALLER, LINE); 
             }
           }
           break;
@@ -345,24 +439,36 @@ int main()
           if (NEXT == '=') // >=
           {
             read_file();
-            printf("%d\n", CODE_MORE_EQUAL);
+            if(DEBUG)
+              show_debug(CODE_MORE_EQUAL);
+            else
+              printf("%d\t%d\n", CODE_MORE_EQUAL, LINE);
           }
           else
           {
             if(NEXT == '>') // >>
             {
-              printf("%d\n", CODE_MORE_MORE); 
+              if(DEBUG)
+                show_debug(CODE_MORE_MORE);
+              else
+                printf("%d\t%d\n", CODE_MORE_MORE, LINE); 
             }
             else // >
             {
-              printf("%d\n", CODE_MORE); 
+              if(DEBUG)
+                show_debug(CODE_MORE);
+              else
+                printf("%d\t%d\n", CODE_MORE, LINE); 
             }
           }
           break;
         case '|':
           if(NEXT == '|') // ||
           {
-            printf("%d\n", CODE_OR);
+            if(DEBUG)
+              show_debug(CODE_OR);
+            else
+              printf("%d\t%d\n", CODE_OR, LINE);
           }
           else // |
           {
@@ -372,7 +478,10 @@ int main()
         case '&':
           if(NEXT == '&') // &&
           {
-            printf("%d\n", CODE_AND);
+            if(DEBUG)
+              show_debug(CODE_AND);
+            else
+              printf("%d\t%d\n", CODE_AND, LINE);
           }
           else // &
           {
@@ -430,7 +539,10 @@ void number_q1()
   else if (NEXT == ' ' || NEXT == ';' || NEXT == ',' ||
            NEXT == ']' || NEXT == ')' || NEXT == '\n')
   {
-    printf("%d\n", CODE_NUMBER);
+    if(DEBUG)
+      show_debug(CODE_NUMBER);
+    else
+      printf("%d\t%d\n", CODE_NUMBER, LINE);
     print_word();
   }
   else
@@ -483,7 +595,10 @@ void number_q3()
   else if (NEXT == ' ' || NEXT == ';' || NEXT == ',' ||
            NEXT == ']' || NEXT == ')' )
   {
-    printf("%d\n", CODE_NUMBER);
+    if(DEBUG)
+      show_debug(CODE_NUMBER);
+    else
+      printf("%d\t%d\n", CODE_NUMBER, LINE);
     print_word();
   }
   else
@@ -506,7 +621,10 @@ void number_q4()
   }
   else if (NEXT == ' ' || NEXT == ';' || NEXT == ',')
   {
-    printf("%d\n", CODE_NUMBER);
+    if(DEBUG)
+      show_debug(CODE_NUMBER);
+    else
+      printf("%d\t%d\n", CODE_NUMBER, LINE);
     print_word();
   }
   else
@@ -633,7 +751,10 @@ void words_q1()
         printf("%d\n", CODE_PACKED);
         break;
       default:
-        printf("%d\n", CODE_VARIABLE_FUNCTION);
+        if(DEBUG)
+          show_debug(CODE_VARIABLE_FUNCTION);
+        else
+          printf("%d\t%d\n", CODE_VARIABLE_FUNCTION, LINE);
     }
   }
 }
@@ -799,4 +920,133 @@ int reserved_word(char word[TAM])
   else if (strcmp(word, "_Packed") == 0)
     return 33;
   return 0;
+}
+
+void show_debug(int code)
+{
+  char token[30];
+  memset(token, 0, sizeof token);
+  switch(code)
+  {
+    case CODE_SEMICOLON:
+      strcpy(token, "PontoVirgula");
+      break;
+    case CODE_COMMA:
+      strcpy(token, "Virgula");
+      break;
+    case CODE_TWO_POINTS:
+      strcpy(token, "DoisPontos");
+      break;
+    case CODE_DOT:
+      strcpy(token, "Ponto");
+      break;
+    case CODE_OPEN_KEYS:
+      strcpy(token, "AbreChaves");
+      break;
+    case CODE_CLOSE_KEYS:
+      strcpy(token, "FechaChaves");
+      break;
+    case CODE_OPEN_PARENTHESES:
+      strcpy(token, "AbreParenteses");
+      break;
+    case CODE_CLOSE_PARENTHESES:
+      strcpy(token, "FechaParenteses");
+      break;
+    case CODE_OPEN_SQUARE_BRACKETS:
+      strcpy(token, "AbreColchetes");
+      break;
+    case CODE_CLOSE_SQUARE_BRACKETS:
+      strcpy(token, "FechaColchetes");
+      break;
+    case CODE_PLUS_PLUS:
+      strcpy(token, "SomaUm");
+      break;
+    case CODE_PLUS_EQUAL:
+      strcpy(token, "MaisAtribuição");
+      break;
+    case CODE_PLUS:
+      strcpy(token, "Soma");
+      break;
+    case CODE_LESS_LESS:
+      strcpy(token, "SubtraiUm");
+      break;
+    case CODE_LESS_EQUAL:
+      strcpy(token, "SubAtribuicao");
+      break;
+    case CODE_LESS:
+      strcpy(token, "Subtracao");
+      break;
+    case CODE_RASH:
+      strcpy(token, "RashTag");
+      break;
+    case CODE_MULT_EQUAL:
+      strcpy(token, "MultAtribuicao");
+      break;
+    case CODE_MULT:
+      strcpy(token, "Mult");
+      break;
+    case CODE_DIV_EQUAL:
+      strcpy(token, "DivAtrib");
+      break;
+    case CODE_DIV:
+      strcpy(token, "Divisao");
+      break;
+    case CODE_PERCENTAGE_EQUAL:
+      strcpy(token, "%=");
+      break;
+    case CODE_PERCENTAGE:
+      strcpy(token, "Porcent");
+      break;
+    case CODE_EXCLAMATION:
+      strcpy(token, "Exclamacao");
+      break;
+    case CODE_DIFFERENT:
+      strcpy(token, "Diferente");
+      break;
+    case CODE_INV:
+      strcpy(token, "Inv");
+      break;
+    case CODE_RECEIVE:
+      strcpy(token, "Recebe");
+      break;
+    case CODE_EQUAL:
+      strcpy(token, "Igual");
+      break;
+    case CODE_LESSER_EQUAL:
+      strcpy(token, "MenorIgual");
+      break;
+    case CODE_SMALLER_SMALLER:
+      strcpy(token, "Bits <<");
+      break;
+    case CODE_SMALLER:
+      strcpy(token, "Menor");
+      break;
+    case CODE_MORE_EQUAL:
+      strcpy(token, "MaiorIgual");
+      break;
+    case CODE_MORE_MORE:
+      strcpy(token, "Bits >>");
+      break;
+    case CODE_MORE:
+      strcpy(token, "Maior");
+      break;
+    case CODE_OR:
+      strcpy(token, "Ou");
+      break;
+    case CODE_AND:
+      strcpy(token, "E");
+      break;
+    case CODE_NUMBER:
+      strcpy(token, "Numero");
+      break;
+    case CODE_VARIABLE_FUNCTION:
+      strcpy(token, "Nome");
+      break;
+    
+  }
+  printf("Linha[%d]\tToken[%d]\t <", LINE, code);
+  for(int i = 0; i < 30; i++) {
+    printf("%c",token[i]);
+  }
+  printf(">\n");
 }
