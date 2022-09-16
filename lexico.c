@@ -4,7 +4,8 @@
 #include <ctype.h>
 
 #define TAM 255
-#define DEBUG 1
+#define DEBUG 0
+#define TAM_ARRAY 50
 
 #define CODE_AUTO 100
 #define CODE_VOID 129
@@ -88,6 +89,8 @@ void read_file();
 void add_current_in_word();
 void print_word();
 int reserved_word(char word[TAM]);
+int add_name(char word[TAM]);
+int add_value(char word[TAM]);
 
 void number_q1();
 void number_q2();
@@ -106,6 +109,7 @@ void bin_q1();
 void hex_q1();
 
 void show_debug(int code);
+void show_numbers();
 
 char CURRENT, NEXT;
 char WORD[TAM];
@@ -114,6 +118,8 @@ FILE *PONT_ARQ;
 int CONTINUE = 1;
 int LINE = 0;
 int NOT_READ = 0;
+char **LIST_VAL;
+char **LIST_NAMES;
 
 int main()
 {
@@ -123,6 +129,9 @@ int main()
     printf("Erro ao tentar abrir o arquivo!");
     return EXIT_FAILURE;
   }
+
+  LIST_VAL = calloc(TAM_ARRAY, sizeof(char[TAM]));
+  LIST_NAMES = calloc(TAM_ARRAY, sizeof(char[TAM]));
 
   NEXT = ' ';
 
@@ -497,6 +506,8 @@ int main()
     }
   } while (NEXT != EOF && CONTINUE);
 
+  show_numbers();
+
   return (0);
 }
 
@@ -512,6 +523,46 @@ void add_current_in_word()
 {
   WORD[POSITION] = CURRENT;
   POSITION++;
+}
+
+int add_name(char word[TAM])
+{
+  for(int i = 0; i < TAM_ARRAY; i++)
+  {
+    if(LIST_NAMES[i] != NULL)
+    {
+      if(strncmp(word, LIST_NAMES[i], sizeof(char[TAM])) == 0)
+      {
+        return i;
+      }
+    }
+    else
+    {
+      LIST_NAMES[i] = malloc(sizeof(char[TAM]));
+      strcpy(LIST_NAMES[i], word);
+      return i;
+    }
+  }
+}
+
+int add_value(char word[TAM])
+{
+  for(int i = 0; i < TAM_ARRAY; i++)
+  {
+    if(LIST_VAL[i] != NULL)
+    {
+      if(strncmp(word, LIST_VAL[i], sizeof(char[TAM])) == 0)
+      {
+        return i;
+      }
+    }
+    else
+    {
+      LIST_VAL[i] = malloc(sizeof(char[TAM]));
+      strcpy(LIST_VAL[i], word);
+      return i;
+    }
+  }
 }
 
 void number_q1()
@@ -539,11 +590,17 @@ void number_q1()
   else if (NEXT == ' ' || NEXT == ';' || NEXT == ',' ||
            NEXT == ']' || NEXT == ')' || NEXT == '\n')
   {
+    int aux = add_value(WORD);
     if(DEBUG)
+    {
       show_debug(CODE_NUMBER);
+      printf("<id, %d>\n", aux);
+    }
     else
+    {
       printf("%d\t%d\n", CODE_NUMBER, LINE);
-    print_word();
+      printf("%d\n", aux);
+    }
   }
   else
   {
@@ -595,11 +652,17 @@ void number_q3()
   else if (NEXT == ' ' || NEXT == ';' || NEXT == ',' ||
            NEXT == ']' || NEXT == ')' )
   {
+    int aux = add_value(WORD);
     if(DEBUG)
+    {
       show_debug(CODE_NUMBER);
+      printf("<id, %d>\n", aux);
+    }
     else
+    {
       printf("%d\t%d\n", CODE_NUMBER, LINE);
-    print_word();
+      printf("%d\n", aux);
+    }
   }
   else
   {
@@ -621,11 +684,17 @@ void number_q4()
   }
   else if (NEXT == ' ' || NEXT == ';' || NEXT == ',')
   {
+    int aux = add_value(WORD);
     if(DEBUG)
+    {
       show_debug(CODE_NUMBER);
+      printf("<id, %d>\n", aux);
+    }
     else
+    {
       printf("%d\t%d\n", CODE_NUMBER, LINE);
-    print_word();
+      printf("%d\n", aux);
+    }
   }
   else
   {
@@ -751,10 +820,17 @@ void words_q1()
         printf("%d\n", CODE_PACKED);
         break;
       default:
+        int aux = add_name(WORD);
         if(DEBUG)
+        {
           show_debug(CODE_VARIABLE_FUNCTION);
+          printf("<id, %d>\n", aux);
+        }
         else
+        {
           printf("%d\t%d\n", CODE_VARIABLE_FUNCTION, LINE);
+          printf("%d\n", aux);
+        }
     }
   }
 }
@@ -849,6 +925,22 @@ void print_word()
     printf("%c", WORD[i]);
   }
   printf("\n");
+}
+
+void show_numbers()
+{
+  printf("99999\n");
+  for(int i = 0; i < TAM_ARRAY; i++)
+  {
+    if(LIST_VAL[i] == NULL)
+      break;
+
+    for(int j = 0; j < TAM; j++)
+    {
+      printf("%c", LIST_VAL[i][j]);
+    }
+    printf("\n");
+  }
 }
 
 int reserved_word(char word[TAM])
