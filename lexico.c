@@ -4,8 +4,8 @@
 #include <ctype.h>
 
 #define TAM 255
-#define DEBUG 0
-#define TAM_ARRAY 50
+#define DEBUG 1
+#define TAM_ARRAY 200
 
 #define CODE_AUTO 100
 #define CODE_VOID 129
@@ -110,6 +110,7 @@ void hex_q1();
 
 void show_debug(int code);
 void show_numbers();
+void show_names();
 
 char CURRENT, NEXT;
 char WORD[TAM];
@@ -507,6 +508,7 @@ int main()
   } while (NEXT != EOF && CONTINUE);
 
   show_numbers();
+  show_names();
 
   return (0);
 }
@@ -721,103 +723,202 @@ void words_q1()
     switch (aux)
     {
       case 1:
-        printf("%d\n", CODE_AUTO);
+        if(DEBUG)
+          show_debug(CODE_AUTO);
+        else
+          printf("%d\t%d\n", CODE_AUTO, LINE);
         break;
       case 2:
-        printf("%d\n", CODE_BREAK);
+        if(DEBUG)
+          show_debug(CODE_BREAK);
+        else
+          printf("%d\t%d\n", CODE_BREAK, LINE);
         break;
       case 3:
-        printf("%d\n", CODE_CASE);
+        if(DEBUG)
+          show_debug(CODE_CASE);
+        else
+          printf("%d\t%d\n", CODE_CASE, LINE);
         break;
       case 4:
-        printf("%d\n", CODE_CHAR);
+        if(DEBUG)
+          show_debug(CODE_CHAR);
+        else
+          printf("%d\t%d\n", CODE_CHAR, LINE);
         break;
       case 5:
-        printf("%d\n", CODE_CONST);
+        if(DEBUG)
+          show_debug(CODE_CONST);
+        else
+          printf("%d\t%d\n", CODE_CONST);
         break;
       case 6:
-        printf("%d\n", CODE_CONTINUE);
+        if(DEBUG)
+          show_debug(CODE_CONTINUE);
+        else
+          printf("%d\t%d\n", CODE_CONTINUE, LINE);
         break;
       case 7:
-        printf("%d\n", CODE_DEFAULT);
+        if(DEBUG)
+          show_debug(CODE_DEFAULT);
+        else
+          printf("%d\t%d\n", CODE_DEFAULT, LINE);
         break;
       case 8:
-        printf("%d\n", CODE_DO);
+        if(DEBUG)
+          show_debug(CODE_DO);
+        else
+          printf("%d\t%d\n", CODE_DO, LINE);
         break;
       case 9:
-        printf("%d\n", CODE_DOUBLE);
+        if(DEBUG)
+          show_debug(CODE_DOUBLE);
+        else
+          printf("%d\t%d\n", CODE_DOUBLE, LINE);
         break;
       case 10:
-        printf("%d\n", CODE_ELSE);
+        if(DEBUG)
+          show_debug(CODE_ELSE);
+        else
+          printf("%d\t%d\n", CODE_ELSE, LINE);
         break;
       case 11:
-        printf("%d\n", CODE_ENUM);
+        if(DEBUG)
+          show_debug(CODE_ENUM);
+        else
+          printf("%d\t%d\n", CODE_ENUM, LINE);
         break;
       case 12:
-        printf("%d\n", CODE_EXTERN);
+        if(DEBUG)
+          show_debug(CODE_EXTERN);
+        else
+          printf("%d\t%d\n", CODE_EXTERN, LINE);
         break;
       case 13:
-        printf("%d\n", CODE_FLOAT);
+        if(DEBUG)
+          show_debug(CODE_FLOAT);
+        else
+          printf("%d\t%d\n", CODE_FLOAT, LINE);
         break;
       case 14:
-        printf("%d\n", CODE_FOR);
+        if(DEBUG)
+          show_debug(CODE_FOR);
+        else
+          printf("%d\t%d\n", CODE_FOR, LINE);
         break;
       case 15:
-        printf("%d\n", CODE_GOTO);
+        if(DEBUG)
+          show_debug(CODE_GOTO);
+        else
+          printf("%d\t%d\n", CODE_GOTO, LINE);
         break;
       case 16:
-        printf("%d\n", CODE_IF);
+        if(DEBUG)
+          show_debug(CODE_IF);
+        else
+          printf("%d\t%d\n", CODE_IF, LINE);
         break;
       case 17:
-        printf("%d\n", CODE_INT);
+        if(DEBUG)
+          show_debug(CODE_INT);
+        else
+        printf("%d\t%d\n", CODE_INT, LINE);
         break;
       case 18:
-        printf("%d\n", CODE_LONG);
+        if(DEBUG)
+          show_debug(CODE_LONG);
+        else
+          printf("%d\t%d\n", CODE_LONG, LINE);
         break;
       case 19:
-        printf("%d\n", CODE_REGISTER);
+        if(DEBUG)
+          show_debug(CODE_REGISTER);
+        else
+          printf("%d\t%d\n", CODE_REGISTER, LINE);
         break;
       case 20:
-        printf("%d\n", CODE_RETURN);
+        if(DEBUG)
+          show_debug(CODE_RETURN);
+        else
+          printf("%d\t%d\n", CODE_RETURN, LINE);
         break;
       case 21:
-        printf("%d\n", CODE_SHORT);
+        if(DEBUG)
+          show_debug(CODE_SHORT);
+        else
+          printf("%d\t%d\n", CODE_SHORT, LINE);
         break;
       case 22:
-        printf("%d\n", CODE_SIGNED);
+        if(DEBUG)
+          show_debug(CODE_SIGNED);
+        else
+          printf("%d\t%d\n", CODE_SIGNED, LINE);
         break;
       case 23:
-        printf("%d\n", CODE_SIZEOF);
+        if(DEBUG)
+          show_debug(CODE_SIZEOF);
+        else
+          printf("%d\t%d\n", CODE_SIZEOF, LINE);
         break;
       case 24:
-        printf("%d\n", CODE_STATIC);
+        if(DEBUG)
+          show_debug(CODE_STATIC);
+        else
+          printf("%d\t%d\n", CODE_STATIC, LINE);
         break;
       case 25:
-        printf("%d\n", CODE_STRUCT);
+        if(DEBUG)
+          show_debug(CODE_STRUCT);
+        else
+          printf("%d\t%d\n", CODE_STRUCT, LINE);
         break;
       case 26:
-        printf("%d\n", CODE_SWITCH);
+        if(DEBUG)
+          show_debug(CODE_SWITCH);
+        else
+          printf("%d\t%d\n", CODE_SWITCH, LINE);
         break;
       case 27:
-        printf("%d\n", CODE_TYPEDEF);
+        if(DEBUG)
+          show_debug(CODE_TYPEDEF);
+        else
+          printf("%d\t%d\n", CODE_TYPEDEF, LINE);
         break;
       case 28:
-        printf("%d\n", CODE_UNION);
+        if(DEBUG)
+          show_debug(CODE_UNION);
+        else
+          printf("%d\t%d\n", CODE_UNION, LINE);
         break;
       case 29:
-        printf("%d\n", CODE_UNSIGNED);
+        if(DEBUG)
+          show_debug(CODE_UNSIGNED);
+        else
+          printf("%d\t%d\n", CODE_UNSIGNED, LINE);
         break;
       case 30:
-        printf("%d\n", CODE_VOID);
+        if(DEBUG)
+          show_debug(CODE_VOID);
+        else
+          printf("%d\t%d\n", CODE_VOID, LINE);
         break;
       case 31:
-        printf("%d\n", CODE_VOLATILE);
+        if(DEBUG)
+          show_debug(CODE_VOLATILE);
+        else
+          printf("%d\t%d\n", CODE_VOLATILE, LINE);
         break;
       case 32:
-        printf("%d\n", CODE_WHILE);
+        if(DEBUG)
+          show_debug(CODE_WHILE);
+        else
+          printf("%d\t%d\n", CODE_WHILE, LINE);
         break;
       case 33:
-        printf("%d\n", CODE_PACKED);
+        if(DEBUG)
+          show_debug(CODE_PACKED);
+        else
+          printf("%d\t%d\n", CODE_PACKED, LINE);
         break;
       default:
         int aux = add_name(WORD);
@@ -846,7 +947,14 @@ void words_string()
   else
   {
     read_file();
-    printf("%d\n", CODE_STRING);
+    int id = add_value(WORD);
+    if(DEBUG)
+    {
+      show_debug(CODE_STRING);
+      printf("<id, %d>\n", id);
+    }
+    else
+      printf("%d\t%d\n%d\n", CODE_STRING, LINE, id);
   }
 }
 
@@ -861,7 +969,14 @@ void words_char()
   else
   {
     read_file();
-    printf("%d\n", CODE_VALUE_CHAR);
+    int id = add_value(WORD);
+    if(DEBUG)
+    {
+      show_debug(CODE_VALUE_CHAR);
+      printf("<id, %d>\n", id);
+    }
+    else
+      printf("%d\t%d\n%d\n", CODE_VALUE_CHAR, LINE, id);
   }
 }
 
@@ -938,6 +1053,22 @@ void show_numbers()
     for(int j = 0; j < TAM; j++)
     {
       printf("%c", LIST_VAL[i][j]);
+    }
+    printf("\n");
+  }
+}
+
+void show_names()
+{
+  printf("names\n");
+  for(int i = 0; i < TAM_ARRAY; i++)
+  {
+    if(LIST_NAMES[i] == NULL)
+      break;
+
+    for(int j = 0; j < TAM; j++)
+    {
+      printf("%c", LIST_NAMES[i][j]);
     }
     printf("\n");
   }
@@ -1133,6 +1264,111 @@ void show_debug(int code)
       break;
     case CODE_VARIABLE_FUNCTION:
       strcpy(token, "Nome");
+      break;
+    case CODE_IF:
+      strcpy(token, "IF");
+      break;
+    case CODE_INT:
+      strcpy(token, "INT");
+      break;
+    case CODE_AUTO:
+      strcpy(token, "Auto");
+      break;
+    case CODE_BREAK:
+      strcpy(token, "Break");
+      break;
+    case CODE_CASE:
+      strcpy(token, "Case");
+      break;
+    case CODE_CHAR:
+      strcpy(token, "Char");
+      break;
+    case CODE_CONST:
+      strcpy(token, "Const");
+      break;
+    case CODE_CONTINUE:
+      strcpy(token, "Contunue");
+      break;
+    case CODE_DEFAULT:
+      strcpy(token, "Default");
+      break;
+    case CODE_DO:
+      strcpy(token, "Do");
+      break;
+    case CODE_DOUBLE:
+      strcpy(token, "Double");
+      break;
+    case CODE_ELSE:
+      strcpy(token, "Else");
+      break;
+    case CODE_ENUM:
+      strcpy(token, "Enum");
+      break;
+    case CODE_EXTERN:
+      strcpy(token, "Extern");
+      break;
+    case CODE_FLOAT:
+      strcpy(token, "Float");
+      break;
+    case CODE_FOR:
+      strcpy(token, "For");
+      break;
+    case CODE_GOTO:
+      strcpy(token, "Goto");
+      break;
+    case CODE_LONG:
+      strcpy(token, "Long");
+      break;
+    case CODE_REGISTER:
+      strcpy(token, "Register");
+      break;
+    case CODE_RETURN:
+      strcpy(token, "Return");
+      break;
+    case CODE_SHORT:
+      strcpy(token, "Short");
+      break;
+    case CODE_SIGNED:
+      strcpy(token, "Signed");
+      break;
+    case CODE_SIZEOF:
+      strcpy(token, "Size_of");
+      break;
+    case CODE_STATIC:
+      strcpy(token, "Static");
+      break;
+    case CODE_STRUCT:
+      strcpy(token, "Struct");
+      break;
+    case CODE_SWITCH:
+      strcpy(token, "Switch");
+      break;
+    case CODE_TYPEDEF:
+      strcpy(token, "Typedef");
+      break;
+    case CODE_UNION:
+      strcpy(token, "Union");
+      break;
+    case CODE_UNSIGNED:
+      strcpy(token, "Unsigned");
+      break;
+    case CODE_VOID:
+      strcpy(token, "Void");
+      break;
+    case CODE_VOLATILE:
+      strcpy(token, "Volatile");
+      break;
+    case CODE_WHILE:
+      strcpy(token, "While");
+      break;
+    case CODE_PACKED:
+      strcpy(token, "Packed");
+      break;
+    case CODE_STRING:
+      strcpy(token, "String");
+      break;
+    case CODE_VALUE_CHAR:
+      strcpy(token, "Value char");
       break;
     
   }
